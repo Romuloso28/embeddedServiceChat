@@ -1,9 +1,22 @@
 <html>
-<body>
-{
-  "OrganizationId": "00DHZ000001pTgv",
-  "DeveloperName": "Steela_PortalConexao",
-  "Url": "https://lcb-arcelormittal--marketing.sandbox.my.salesforce-scrt.com"
-}
-</body>
+<script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'pt_BR'; // For example, enter 'en' or 'en-US'
+
+			embeddedservice_bootstrap.init(
+				'00DHZ000001pTgv',
+				'Steela_Portal_Conexao_Messaging',
+				'https://lcb-arcelormittal--marketing.sandbox.my.site.com/ESWSteelaPortalConexao1724415651895',
+				{
+					scrt2URL: 'https://lcb-arcelormittal--marketing.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://lcb-arcelormittal--marketing.sandbox.my.site.com/ESWSteelaPortalConexao1724415651895/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
 </html>
