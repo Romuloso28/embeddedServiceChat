@@ -1,22 +1,64 @@
 <html>
+<style type='text/css'>
+	.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #005290;
+		font-family: "Arial", sans-serif;
+	}
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: 1px solid #005290;
+	}
+</style>
+
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
 <script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'pt_BR'; // For example, enter 'en' or 'en-US'
+	var initESW = function(gslbBaseURL) {
+		embedded_svc.settings.displayHelpButton = true; //Ou falso
+		embedded_svc.settings.language = ''; //Por exemplo, insira "pt" ou "pt-BR"
 
-			embeddedservice_bootstrap.init(
-				'00DHZ000001pTgv',
-				'Steela_Portal_Conexao_Messaging',
-				'https://lcb-arcelormittal--marketing.sandbox.my.site.com/ESWSteelaPortalConexao1724415651895',
-				{
-					scrt2URL: 'https://lcb-arcelormittal--marketing.sandbox.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Assume como padrão o Chat com um especialista)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Assume como padrão Agente off-line)
+
+		//embedded_svc.settings.loadingText = ''; //(Assume como padrão Carregando)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Define o domínio de sua implantação para que seus visitantes possam navegar em subdomínios durante uma sessão de chat)
+
+		// Configurações para Chat
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Define o preenchimento automático de campos de formulário de pré-chat
+		//embedded_svc.settings.fallbackRouting = []; //Uma matriz de IDs de botão, IDs de usuário ou userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Padronizado para Entre em contato conosco)
+
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
+
+		embedded_svc.init(
+			'https://lcb-arcelormittal--marketing.sandbox.my.salesforce.com',
+			'https://lcb-arcelormittal--marketing.sandbox.my.site.com/portal',
+			gslbBaseURL,
+			'00DHZ000001pTgv',
+			'test',
+			{
+				baseLiveAgentContentURL: 'https://c.la2s-core1.sfdc-xwy4ub.salesforceliveagent.com/content',
+				deploymentId: '5721U000000kkkI',
+				buttonId: '573HZ0000007vmL',
+				baseLiveAgentURL: 'https://d.la2s-core1.sfdc-xwy4ub.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IHZ000001GyPV2A0_1917c1adb5b',
+				isOfflineSupportEnabled: false
+			}
+		);
 	};
-</script>
-<script type='text/javascript' src='https://lcb-arcelormittal--marketing.sandbox.my.site.com/ESWSteelaPortalConexao1724415651895/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 
+	if (!window.embedded_svc) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://lcb-arcelormittal--marketing.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+</script>
 </html>
